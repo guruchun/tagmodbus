@@ -1,0 +1,27 @@
+{
+    "modbus": {
+        "mapList": {
+            "sample-pcs": "sample-modbus-map.yaml"
+        },
+        "mode": "TCP",
+        "ip": "127.0.0.1",
+        "port": 502,
+        "comPort": "COM1",
+        "baudRate": 115200,
+        "dataBits": 8,
+        "parity": "None",
+        "stopBits": "One",
+        "unitId": 1,
+        "connTimeout": 1000,
+        "responseTimeout": 1000,
+        "monInterval": 500
+    },
+    "logView": [
+        "modbus.log",
+        "console.log"
+    ],
+    "window": {
+        "width": 1520,
+        "height": 900
+    }
+}

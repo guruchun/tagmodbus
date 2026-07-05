@@ -1,0 +1,73 @@
+# Modbus Map - Register Definitions
+# define sections
+# - section: Section name
+# - baseAddress: Base address of registers
+# - quantity: Section size(Maximum is limited 125 by protocol specification)
+# - secType: HREG(Holding), IREG(Input), COIL, DISC
+# define registers
+# - regType: S16, U16, B16, S32, U32, F32, F64, STR, CHR
+# - format: ABCD(default), CDAB, BADC, DCBA (how to access multiple registers for one tag)
+# - access: RO(default), RW, WO
+
+sections:
+  - type: HREG
+    section: PcsAI
+    cycleTime: 500
+    baseAddress: 0
+    quantity: 120
+    registers:
+      - {addr: 20, type: S16, scale: 10, access: RO, tag: invDcVoltage, desc: "배터리 측 전압"}
+      - {addr: 21, type: S16, scale: 10, access: RO, tag: invDcCurrent, desc: "DC 측 전류"}
+      - {addr: 23, type: S16, scale: 10, access: RO, tag: invDcPower, desc: "DC 측 파워"}
+      - {addr: 47, type: S16, scale: 1000, access: RO, tag: invPower_factor, desc: "Power Factor"}
+      - {addr: 48, type: U16, access: RO, tag: invRemodeMode, desc: "Order Source (0,1:Local 2:Remote)"}
+      - {addr: 51, type: U16, access: RO, tag: invOperState, desc: "0:NONE 1:Bypass 2:Charge 3:Discharge 4:Stand-by"}
+      - {addr: 100, type: F32, format: CDAB, unit: V, tag: invAcVoltageA, desc: "Volts A-N"}
+      - {addr: 102, type: F32, format: CDAB, unit: V, tag: invAcVoltageB, desc: "Volts B-N"}
+      - {addr: 103, type: F32, format: CDAB, unit: V, tag: invAcVoltageC, desc: "Volts C-N"}
+      - {addr: 110, type: S32, scale: 1000, unit: Wh, tag: pqmEnergyRx, desc: "W-hours Received"}
+      - {addr: 112, type: S32, scale: 1000, unit: Wh, tag: pqmEnergyTx, desc: "W-hours Delivered"}
+
+  - type: HREG
+    section: PcsBF
+    baseAddress: 0
+    quantity: 50
+    cycleTime: 500
+    registers:
+      - addr: 48
+        type: B16
+        tag: invStatusRaw
+        desc: "status b0-b15"
+        bits:
+          - {pos: 2, tag: invStatusDccb, desc: "CB1(BATT CB) ON/OFF"}
+          - {pos: 6, tag: invStatusAccb, desc: "CB3(GRID/LOAD CB)"}
+      - addr: 49
+        type: B16
+        tag: invControlRaw
+        desc: "control mode/status"
+        bits:
+          - {pos: 0, width: 8, tag: invControlMode, desc: "제어모드 0:- 1:CP 2:CCCV 3:CC 4:CV"}
+          - {pos: 8, width: 8, tag: invControlStatus, desc: "제어상태 0:STOP 1:DC_CHG 2:AC_GEN 4:RUN 5:FAULT"}
+
+  - type: HREG
+    section: PcsAO
+    baseAddress: 3000
+    quantity: 100
+    cycleTime: 0
+    registers:
+      - {addr: 0, type: U16, access: RW, tag: invCommandSet, desc: "1:run 2:stop 3:fault_reset 15:e-stop"}
+      - {addr: 64, type: S16, scale: 10, access: RW, tag: invActivePowerSet, desc: "유효전력 (양:방전 음:충전 0:대기)"}
+      - {addr: 65, type: S16, scale: 10, access: RW, tag: invReactivePowerSet, desc: "무효전력 (양:진상 음:지상)"}
+      - {addr: 70, type: U16, scale: 10, access: RW, tag: invSocUpperLimitSet, desc: "SOC 상한"}
+      - {addr: 71, type: U16, scale: 10, access: RW, tag: invSocLowerLimitSet, desc: "SOC 하한"}
+
+  - type: COIL
+    section: PcsDO
+    baseAddress: 0
+    quantity: 10
+    cycleTime: 0
+    registers:
+      - {addr: 100, access: RW, tag: invCmdRun}
+      - {addr: 101, access: RW, tag: invCmdStop}
+      - {addr: 102, access: RW, tag: invCmdReset}
+      - {addr: 103, access: RW, tag: invCmdEstop}

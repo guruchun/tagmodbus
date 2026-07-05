@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ks_c_5601-1987"?>
+<ServerConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <modbus>
+    <mapList>
+      <mapFile key="10kW-MGC" value="PMBG2-010-modtcp-mgc.xml"/>
+      <mapFile key="10kW-HMI" value="PMBG2-010-modtcp-hmi.xml"/>
+    </mapList>
+    <ip>127.0.0.1</ip>
+    <port>1502</port>
+  </modbus>
+  <logView>
+    <watch>svr-modbus.log</watch>
+    <watch>svr-console.log</watch>
+  </logView>
+</ServerConfig>

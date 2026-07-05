@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.11919.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagModbusClient", "client\TagModbusClient.csproj", "{2050267A-4513-44D6-A7FC-4077050A8D08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagModbusLib", "..\tagmodbuslib\TagModbusLib.csproj", "{0AB4EEF1-46AD-D34F-3E07-FBC7761E7157}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2050267A-4513-44D6-A7FC-4077050A8D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2050267A-4513-44D6-A7FC-4077050A8D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2050267A-4513-44D6-A7FC-4077050A8D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2050267A-4513-44D6-A7FC-4077050A8D08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AB4EEF1-46AD-D34F-3E07-FBC7761E7157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AB4EEF1-46AD-D34F-3E07-FBC7761E7157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AB4EEF1-46AD-D34F-3E07-FBC7761E7157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AB4EEF1-46AD-D34F-3E07-FBC7761E7157}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0FC031A0-33D1-45E6-A9CC-45D734DF0A84}
+	EndGlobalSection
+EndGlobal

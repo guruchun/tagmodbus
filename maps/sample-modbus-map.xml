@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Modbus Map과 데이터 모델을 매핑한다.                                                -->
+<!-- Modbus Client, Server 모두 동일한 Mapping 파일을 사용하고 scale 적용 방식만 다르다. -->
+
+<modbusMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schema/mcp-modbus-map.xsd">
+
+  <!-- modbusMap.registers                                                                                      -->
+  <!--     연속되지 않은 modbus 주소영역이나 반복되는 영역(section)을 관리하기 쉽도록 그룹핑한다.               -->
+  <!--   registers@type: 레지스터 타입 (HREG, IREG, COIL, DISC)                                                 -->
+  <!--       Modbus Map은 전체 주소영역을 레지스터 유형별로 구분할 수도 있고, 통합해서 정의할수도 있다.         -->
+  <!--       여기서는 레지스터(hreg, ireg)와 비트(coil, disc)가 전체 주소 영역을 쓸 수 있다고 가정한다.         -->
+  <!--       주소가 중복되지 않도록 레지스터 종류를 구분해 주어야 한다.                                         -->
+  <!--       - HREG: holding register, 읽기/쓰기 가능한 16bit register                                          -->
+  <!--       - IREG: input register, 읽기 전용 16bit register                                                   -->
+  <!--       - COIL: coil bit, 읽기/쓰기 가능한 1bit(binary, digital) register                                  -->
+  <!--       - DISC: discrete bit, 읽기 전용                                                                    -->
+  <!--   registers@baseAddress: 영역내 레지스터 주소를 만드는데 사용되는 영역 시작 주소                         -->
+  <!--   registers@section: Mapping Tool에서 각 영역을 구분하기 위한 이름                                       -->
+  <!--   registers@quantity: Mapping Tool에서 영역별 주소범위를 Validation을 위해 사용                          -->
+  <registers type="HREG" section="InverterAI" baseAddress="0" quantity="300">
+  
+    <!-- registers.register                                                                                     -->
+    <!--     Modbus 주소별로 PMS 데이터 모델에 매핑하기 위한 정보                                               -->
+    <!--     Modbus Device의 데이터시트(Register Map)를 보고 작성해야 한다.                                     -->
+    <!--   register@address(uint16): 레지스터의 주소, baseAddress로부터의 offset address                        -->
+    <!--       registers@baseAddress와 합쳐서 unit16 값의 범위를 벗어날 수 없다.                                -->
+    <!--   register@scale(uS32, default=1): 소수점 이하의 값을 전달하기 위해 사용한다.                          -->
+    <!--       device의 값 단위와 PMS data의 값 단위가 다를 경우 scale을 사용해서 맞춰줄 수 있다.               -->
+    <!--       device(slave, 송신측)는 실제 값에 scale을 곱해서 전송하고                                        -->
+    <!--         client(master, 수신측)는 받은 값을 scale로 나눠서 원본값으로 사용한다.                         -->
+    <!--       dataType에 상관없이 적용할 수 있다.                                                              -->
+    <!--       ex) scale="10"이면, 실제 데이터 '60.1'에 scale을 곱해 '601'로 보내고,                            -->
+    <!--           받는 쪽에서 scale로 나눠 '60.1'로 해석한다.                                                  -->
+    <!--   register@dataType: Modbus에 실어보내는 데이터의 종류                                                 -->
+    <!--       (S16, U16, B16, U/S32, U/INT64, F32, DOUBLE, STR)                                                -->
+    <!--       Modbus로 읽은 2byte를 어떤 의미로 해석할 것인지 지정한다.                                        -->
+    <!--       예를 들어 값 0xabcd를 -21555(S16)로 해석할지 43981(U16)로 해석할지                               -->
+    <!--       16개 bit값(bit-field)을 합친것으로 해석할지 결정하기 위해 반드시 필요하다.                       -->
+    <!--   register@access: 읽기/쓰기 제한 (RO, WO, RW)                                                         -->
+    <!--       registers@type은 읽기/쓰기 가능하지만 주소별로 제한을 줄 수 있다.                                --> 
+    <!--   register@format(default=ABCD): 레지스터 조합순서(ABCD, CDAB, BADC, DCBA)                             -->
+    <!--       여러개의 연속된 레지스터를 사용해야하는 경우 byte/word의 조합순서를 지정한다.                    -->
+    <!--       S16, U16, B16처럼 단일 레지스터럴 사용하는 dataType에서는 필요없다. 있어도 무시된다.             -->
+    <!--   register@flip(default=false): 값을 반전시켜서 tag에 매핑할 것인지 여부(true, false)                  -->
+    <!--       registers@type이 COIL이거나 DISC일때만 유효하다.                                                 -->
+    <!--   register@tag: Modbus의 주소에 들어있는 값이 PMS 데이터 모델의 어느 Tag에 매핑되는지를 지정한다.      -->
+    <!--   register@width: 묶어서 읽기/쓰기해야할 연속된 레지스터의 개수                                        -->
+    <!--       STR처럼 dataType에 의해 몇개의 레지스터가 사용되는지 결정될 수 없는 경우 사용된다.               -->
+    <!--   register@unit: 값의 단위를 적는다. 송신측(device)의 Modbus map에 있는 단위를 적는다.                 -->
+    <!--   register@description: 값의 의미와 설명                                                               -->  
+    
+    <register address="20" dataType="S16" scale="10" access="RO" tag="invDcVoltage" description="배터리 측 전압" />
+    <register address="21" dataType="S16" scale="10" access="RO" tag="invDcCurrent" description="DC 측 전류" />
+    <register address="23" dataType="S16" scale="10" access="RO" tag="invDcPower" description="DC 측 파워" />
+    <register address="47" dataType="S16" scale="1000" access="RO" tag="invPower_factor" description="Power Factor" />
+    <register address="48" dataType="U16" scale="1" access="RO" tag="invRemodeMode" description="Order Source ( 0,1: Local Mode  2: Remote  )" />
+    <register address="51" dataType="U16" scale="1" access="RO" tag="invOperState" description="충/방전 상태, 0:NONE 1:Bypass 2:Charge 3:Discharge 4:Stand-by" />
+    
+    <!-- registers.register@format 상세 설명                                                          -->
+    <!--   실제값 0xAABBCCDD가 2개의 Modbus 레지스터에 할당되는 방식                                  -->
+    <!--   default foramt = ABCD                                                                      -->
+    <!--   ========================================================================================   -->
+    <!--   |format | low address | high address | 설명                                            |   -->
+    <!--   |  ABCD |      0xAABB |       0xCCDD | high byte first, high word first: "big endian"  |   -->
+    <!--   |  CDAB |      0xCCDD |       0xAABB | high byte first, low word first                 |   -->
+    <!--   |  BADC |      0xBBAA |       0xDDCC | low byte first, high word first                 |   -->
+    <!--   |  DCBA |      0xDDCC |       0xBBAA | low byte first, low word first: "little endian" |   -->
+    <!--   ========================================================================================   -->
+    <register address="1000" dataType="F32" format="CDAB" unit="volts" tag="inv.voltage_r_phase" description="Volts A-N" />
+    <register address="1002" dataType="F32" format="CDAB" unit="volts" tag="inv.voltage_s_phase" description="Volts B-N" />
+    <!--  Meter Device가 Wh로 주는 값을 Adapter에서 KWh로 바꿔서 읽는다. -->
+    <register address="1500" dataType="S32" scale="1000" unit="W-hours" tag="pqmeter/ai/energy_rx.i32" description="W-hours, Received" />
+    <register address="1502" dataType="S32" scale="1000" unit="W-hours" tag="pqmeter/ai/energy_tx.i32" description="W-hours, Delivered" />
+  </registers>
+  <registers type="HREG" section="PcsBitFieldsInput" baseAddress="0" quantity="200">
+  
+    <!-- register.bitf                                                                                -->
+    <!--     register의 각 bit별로 PMS tag에 매핑한다.                                                -->
+    <!--     register@dataType="B16"일때만 register.bitf 를 가질 수 있다.                             -->
+    <!--                                                                                              -->
+    <!--   bitf@position: 16bit WORD의 LSB부터 시작해서 bit position (0~15)                           -->
+    <!--   bitf@width(default=1): @position부터 시작해서 몇개의 bit를 tag에 매핑할 것인지 지정한다.   -->
+    <!--       @position + @width의 최대값은 16이다.                                                  -->
+    <!--   bitf@flip(default=false): 값을 반전시켜서 tag에 매핑할 것인지 여부(true, false)            -->
+    <!--       @width가 1일때만 유효하다.                                                             -->
+    <register address="49" dataType="B16" tag="inverter/raw/status1.u16" description="status 0-15">
+      <bitf position="2" tag="inverter/di/dccb_closed.b01" description="CB1(BATT CB) ON/OFF" />
+      <bitf position="3" tag="inverter/di/dccb_a_closed.b01" description="CB1A(초기 충전) ON/OFF" />
+      <bitf position="6" tag="inverter/di/accb_closed.b01" description="CB3 ( GRID or LOAD CB - 수동 스위치 )" />
+    </register>
+    <register address="53" dataType="B16" tag="inverter/raw/control.u16" description="constrol mode, status">
+      <bitf position="0" width="8" tag="inverter/raw/control_mode.u16" description="제어 모드: 0: -, 1: CP, 2: CCCV 3: CC 4: CV"/>
+      <bitf position="8" width="8" tag="inverter/raw/control_status.u16" description="제어 상태: 0: STOP, 1: DC CHARGE, 2: AC GENERATE, 3: START SYNC, 4: RUN, 5: FAULT 6: TEST_MODE"/>
+    </register>
+  </registers>
+
+  <!-- @type이 Holding REG이고 쓰기를 요청할 때 tag mapping -->
+  <registers type="HREG" section="InverterAO" baseAddress="0" quantity="300">
+      <register address="3000" dataType="U16" scale="1" tag="inv.commandSet" description="Control Command (1:run, 2:stop, 3:fault_reset, 15:e-stop)"/>
+      <register address="3064" dataType="S16" scale="10" access="RW" tag="inv.activePowerSet" description="유효전력 레퍼런스 ( 양수: 방전, 음수: 충전 0: 대기)"/>
+      <register address="3065" dataType="S16" scale="10" access="RW" tag="inv.reactivePowerSet" description="무효전력 레퍼런스 ( 양수: 진상 Capacitive, 음수:지상 Inductive)"/>
+      <register address="3070" dataType="U16" scale="10" access="RW" tag="inv.socUpperLimitSet" description="SOC 상한 범위 설정"/>
+      <register address="3071" dataType="U16" scale="10" access="RW" tag="inv.socLowerLimitSet" description="SOC 하한 범위 설정"/>
+  </registers>
+  
+  <!-- @type이 COIL이나 DISC일 때 tag mapping -->
+  <registers type="COIL" section="InverterDO" baseAddress="0" quantity="10">
+    <register address="100" access="RW" tag="inv.cmdRun" />
+    <register address="101" access="RW" tag="inv.cmdStop" />
+    <register address="102" access="RW" tag="inv.cmdReset" />
+    <register address="103" access="RW" tag="inv.cmdEstop" />
+  </registers>  
+  
+</modbusMap>
