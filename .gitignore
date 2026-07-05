@@ -1,0 +1,44 @@
+﻿## Build results
+**/bin/
+**/obj/
+
+## NuGet
+**/packages/
+**/*.nupkg
+
+## Visual Studio
+**/.vs
+**/*.suo
+**/*.user
+**/*.userosscache
+**/*.sln.docstates
+
+## User-specific files
+**/*.rsuser
+**/*.suo
+**/*.user
+**/*.userosscache
+**/*.sln.docstates
+
+## Build outputs
+**/net8.0-windows/
+
+## Build logs
+**/*.log
+**/msbuild.*.binlog
+
+## Applicaiton logs
+**/log/
+
+## Test results
+**/[Tt]est[Rr]esult*/
+**/[Bb]uild[Ll]og.*
+
+## OS generated
+**/Thumbs.db
+**/ehthumbs.db
+**/Desktop.ini
+**/.DS_Store
+
+## Publish profiles
+**/Properties/PublishProfiles/
