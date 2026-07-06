@@ -1,0 +1,25 @@
+{
+    "modbus": {
+        "mapList": {
+            "10kW-MGC": "PMBG2-010-modtcp-mgc.xml",
+            "10kW-HMI": "PMBG2-010-modtcp-hmi.xml"
+        },
+        "mode": "TCP",
+        "ip": "0.0.0.0",
+        "port": 1502,
+        "comPort": "COM1",
+        "baudRate": 9600,
+        "dataBits": 8,
+        "parity": "None",
+        "stopBits": "One",
+        "unitId": 1
+    },
+    "logView": [
+        "svr-modbus.log",
+        "svr-console.log"
+    ],
+    "window": {
+        "width": 1200,
+        "height": 900
+    }
+}

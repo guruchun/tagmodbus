@@ -6,6 +6,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TagModbusClient", "client\T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagModbusLib", "..\tagmodbuslib\TagModbusLib.csproj", "{0AB4EEF1-46AD-D34F-3E07-FBC7761E7157}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagModbusServer", "server\TagModbusServer.csproj", "{CDB478BC-F393-AEF1-170A-099F3F98D0A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{0AB4EEF1-46AD-D34F-3E07-FBC7761E7157}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AB4EEF1-46AD-D34F-3E07-FBC7761E7157}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AB4EEF1-46AD-D34F-3E07-FBC7761E7157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDB478BC-F393-AEF1-170A-099F3F98D0A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDB478BC-F393-AEF1-170A-099F3F98D0A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDB478BC-F393-AEF1-170A-099F3F98D0A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDB478BC-F393-AEF1-170A-099F3F98D0A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

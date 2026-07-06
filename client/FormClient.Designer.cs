@@ -173,7 +173,7 @@ namespace TagModbus
             label16.Name = "label16";
             label16.Size = new System.Drawing.Size(78, 15);
             label16.TabIndex = 88;
-            label16.Text = "Map Binding:";
+            label16.Text = "Binding Map:";
             // 
             // cbBindingMap
             // 
@@ -720,7 +720,6 @@ namespace TagModbus
             // dgvModbus
             // 
             dgvModbus.AllowUserToAddRows = false;
-            dgvModbus.AutoGenerateColumns = false;
             dgvModbus.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             dgvModbus.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvModbus.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Address, Value, Converted, DataType, Format, ScaleFactor, Tag, Description });
@@ -797,8 +796,8 @@ namespace TagModbus
             // 
             // Description
             // 
-            Description.DataPropertyName = "Description";
             Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            Description.DataPropertyName = "Description";
             Description.HeaderText = "Description";
             Description.MinimumWidth = 8;
             Description.Name = "Description";
